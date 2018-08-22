@@ -3,6 +3,11 @@
 
 (setq doom-font (font-spec :family "Inconsolata" :size 16))
 
+; Coq
+(setq evil-want-abbrev-expand-on-insert-exit nil)
+(setq company-coq-disabled-features
+      '(prettify-symbols smart-subscripts))
+
 (doom! :feature
       ;debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
@@ -83,6 +88,7 @@
        (cc +irony +rtags); C/C++/Obj-C madness
        clojure           ; java with a lisp
       ;common-lisp       ; if you've seen one lisp, you've seen them all
+       coq
       ;crystal           ; ruby at the speed of c
       ;csharp            ; unity, .NET, and mono shenanigans
        data              ; config/data formats
@@ -103,7 +109,7 @@
        markdown          ; writing docs for people to ignore
       ;nim               ; python + lisp at the speed of c
       ;nix               ; I hereby declare "nix geht mehr!"
-      ;ocaml             ; an objective camel
+       ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +attach          ; custom attachment system
         +babel           ; running code in org
