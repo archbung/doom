@@ -8,6 +8,28 @@
 (setq company-coq-disabled-features
       '(prettify-symbols smart-subscripts))
 
+;;; https://github.com/tarsius/keychain-environment/blob/master/keychain-environment.el
+;;;###autoload
+(defun keychain-refresh-environment ()
+  "Set ssh-agent and gpg-agent environment variables.
+Set the environment variables `SSH_AUTH_SOCK', `SSH_AGENT_PID'
+and `GPG_AGENT' in Emacs' `process-environment' according to
+information retrieved from files created by the keychain script."
+  (interactive)
+  (let* ((ssh (shell-command-to-string "keychain -q --noask --agents ssh --eval"))
+         (gpg (shell-command-to-string "keychain -q --noask --agents gpg --eval")))
+    (list (and ssh
+               (string-match "SSH_AUTH_SOCK[=\s]\\([^\s;\n]*\\)" ssh)
+               (setenv       "SSH_AUTH_SOCK" (match-string 1 ssh)))
+          (and ssh
+               (string-match "SSH_AGENT_PID[=\s]\\([0-9]*\\)?" ssh)
+               (setenv       "SSH_AGENT_PID" (match-string 1 ssh)))
+          (and gpg
+               (string-match "GPG_AGENT_INFO[=\s]\\([^\s;\n]*\\)" gpg)
+               (setenv "GPG_AGENT_INFO" (match-string 1 gpg))))))
+
+(keychain-refresh-environment)
+
 (doom! :feature
       ;debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
@@ -76,7 +98,7 @@
       ;make              ; run make tasks from Emacs
        magit             ;
       ;password-store    ; password manager for nerds
-      ;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
       ;prodigy           ; FIXME managing external services & code builders
       ;rgb               ; creating color strings
       ;tmux              ; an API for interacting with tmux
@@ -85,8 +107,8 @@
 
        :lang
       ;assembly          ; assembly for fun or debugging
-       (cc +irony +rtags); C/C++/Obj-C madness
-       clojure           ; java with a lisp
+      ;(cc +irony +rtags); C/C++/Obj-C madness
+      ;clojure           ; java with a lisp
       ;common-lisp       ; if you've seen one lisp, you've seen them all
        coq
       ;crystal           ; ruby at the speed of c
@@ -109,7 +131,7 @@
        markdown          ; writing docs for people to ignore
       ;nim               ; python + lisp at the speed of c
       ;nix               ; I hereby declare "nix geht mehr!"
-       ocaml             ; an objective camel
+      ;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +attach          ; custom attachment system
         +babel           ; running code in org
@@ -120,14 +142,14 @@
       ;php               ; perl's insecure younger brother
       ;plantuml          ; diagrams for confusing people more
       ;purescript        ; javascript, but functional
-       python            ; beautiful is better than ugly
+      ;python            ; beautiful is better than ugly
       ;qt                ; the 'cutest' gui framework ever
       ;racket            ; a DSL for DSLs
       ;rest              ; Emacs as a REST client
       ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       scala             ; java, but good
-       (sh +fish)        ; she sells (ba|z)sh shells on the C xor
+      ;scala             ; java, but good
+      ;(sh +fish)        ; she sells (ba|z)sh shells on the C xor
       ;solidity          ; do you need a blockchain? No.
       ;swift             ; who asked for emoji variables?
       ;web               ; the tubes
