@@ -6,6 +6,17 @@
 (setq company-coq-disabled-features
       '(prettify-symbols smart-subscripts))
 
+; org-mode
+(setq reftex-default-bibliography '("~/org/bibliography/references.bib"))
+
+(setq org-ref-bibliography-notes "~/org/bibliography/notes.org"
+      org-ref-default-bibliography '("~/org/bibliography/references.bib")
+      org-ref-pdf-directory "~/org/bibliography/bibtex-pdfs")
+
+; latex
+(setq font-latex-fontify-script nil
+      font-latex-fontify-sectioning 'color)
+
 ;;; https://github.com/tarsius/keychain-environment/blob/master/keychain-environment.el
 ;;;###autoload
 (defun keychain-refresh-environment ()
@@ -152,7 +163,7 @@ information retrieved from files created by the keychain script."
        ;;rest              ; Emacs as a REST client
        ;;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;;scala             ; java, but good
+       scala             ; java, but good
        (sh +fish)        ; she sells (ba|z|fi)sh shells on the C xor
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
